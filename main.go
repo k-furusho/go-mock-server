@@ -1,8 +1,9 @@
 package main
 
 import (
-	"io/ioutil"
 	"net/http"
+
+	"github.com/google/uuid"
 )
 
 func main()  {
@@ -11,7 +12,8 @@ func main()  {
 }
 
 func handleRequest(w http.ResponseWriter, r *http.Request)  {
-	byteArray,_ := ioutil.ReadFile("response.json")
+	uuidWithHyphen := uuid.New()
+	response := uuidWithHyphen.String()
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	w.Write(byteArray)
+	w.Write([]byte(`{"uuid": "` + response + `"}`))
 }
